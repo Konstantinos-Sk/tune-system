@@ -146,7 +146,7 @@ public OnTuneLoad(playerid, idx)
     {
         case 0:
         {
-            new dialog_info[67], part_name[13];
+            new dialog_info[67], part_name[14];
 
             for (new i, j = cache_get_row_count(g_SQL); i != j; i++)
             {
