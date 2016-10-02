@@ -1,6 +1,7 @@
 #Tune System
 
 
+
 It is a simple yet effective filterscript designed for Freeroam servers which allows you to tune a vehicle outside of mod shops. It currently does not support _Nitro_ or _Stereo_ and probably never will.
 
 There are only 4 commands available at the moment which are:
@@ -9,10 +10,13 @@ There are only 4 commands available at the moment which are:
 - /vcolor - Allows you to change the colors of your vehicle!
 - /vcolorlist - Shows a list with all the available vehicle colors (both the existing colors from San Andreas and extended colors were added in 0.3x).
 
+
+
 How to install:
 ---------------
 1. Find the version (__R33 to R39-6__ or __R40+__) that matches the plugin version you've loaded into your server and save the filterscript as ___tune_system.pwn___
 2. Open _server.cfg_ and add _tune_system_ in the __filterscripts__ line.
+
 
 
 Important notes:
@@ -43,6 +47,8 @@ MySQL said: Documentation
 #1115 - Unknown character set: 'utf8mb4'
 ```
 indicates that you use an older version of the mysql server. It is always recommended to update but if you cannot/don't want to, replace ___character set___ as __'utf8'__.
+- If the connection to the mysql server fails, it will try to unload the filterscript. Make sure the filterscript is named as _tune_system_.
+
 
 
 Credits
