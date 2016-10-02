@@ -85,14 +85,20 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
                 {
                     case 534 .. 536, 558 .. 562, 565, 567, 575, 576:
                     {
-                        if (strcmp(inputtext, "Wheels"))
+                        if (!strcmp(inputtext, "Wheels") || !strcmp(inputtext, "Hydraulics"))
+                        {
+                            new Query[99];
+				            
+                            mysql_format(g_SQL, Query, sizeof Query, "SELECT componentid,type FROM vehicle_components WHERE part='%e' ORDER BY type", inputtext);
+                            mysql_tquery(g_SQL, Query, "OnTuneLoad", "ii", playerid, 2);
+                        }
+                        else
                         {
                             new Query[113];
 				            
                             mysql_format(g_SQL, Query, sizeof Query, "SELECT componentid,type FROM vehicle_components WHERE cars=%i AND part='%e' ORDER BY type", modelid, inputtext);
                             mysql_tquery(g_SQL, Query, "OnTuneLoad", "ii", playerid, 2);
                         }
-                        else mysql_tquery(g_SQL, "SELECT componentid,type FROM vehicle_components WHERE part='Wheels' ORDER BY type", "OnTuneLoad", "ii", playerid, 2);
                     }
                     default:
                     {
@@ -111,8 +117,8 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
             new vehicleid = GetPlayerVehicleID(playerid), componentid;
             
-            sscanf(inputtext, "i", componentid);
-            AddVehicleComponent(vehicleid, componentid);
+            if (!sscanf(inputtext, "i", componentid)) AddVehicleComponent(vehicleid, componentid);
+            else return RemoveVehicleComponent(vehicleid, 1087);
 			
             // sideskirts and vents that have left and right side should be applied twice
             switch (componentid)
@@ -146,7 +152,7 @@ public OnTuneLoad(playerid, idx)
     {
         case 0:
         {
-            new dialog_info[67], part_name[14];
+            new dialog_info[79], part_name[14];
 
             for (new i, j = cache_num_rows(); i != j; i++)
             {
@@ -162,10 +168,9 @@ public OnTuneLoad(playerid, idx)
         {
             new rows = cache_num_rows();
 			
-            if (!rows) SendClientMessage(playerid, 0xFF0000FF, "Error: You cannot tune this vehicle.");
-            else
+            if (rows)
             {
-                new dialog_info[68], part_name[12], num_fields;
+                new dialog_info[80], part_name[13], num_fields;
 			    
                 cache_get_field_count(num_fields);
 			    
@@ -182,6 +187,7 @@ public OnTuneLoad(playerid, idx)
 				
                 ShowPlayerDialog(playerid, DIALOG_TUNE, DIALOG_STYLE_LIST, "Available Parts", dialog_info, "Select", "Cancel");
             }
+            else SendClientMessage(playerid, 0xFF0000FF, "Error: You cannot tune this vehicle.");
         }
         case 2:
         {
@@ -197,6 +203,8 @@ public OnTuneLoad(playerid, idx)
 	            
                 format(dialog_info, sizeof dialog_info, "%s%i\t%s\n", dialog_info, componentid, type);
             }
+            
+            if (componentid == 1087) strcat(dialog_info, " ----\tRemove Hydraulics");
 	        
             ShowPlayerDialog(playerid, DIALOG_TUNE_2, DIALOG_STYLE_TABLIST_HEADERS, "Available Components", dialog_info, "Install", "Back");
         }
@@ -238,18 +246,19 @@ CMD:tune(playerid, params[])
     {
         case 534 .. 536, 558 .. 562, 565, 567, 575, 576:
         {
-            new Query[85];
-            mysql_format(g_SQL, Query, sizeof Query, "SELECT DISTINCT part FROM vehicle_components WHERE cars=%i OR cars=-1 ORDER BY part", modelid);
+            new Query[99];
+            mysql_format(g_SQL, Query, sizeof Query, "SELECT DISTINCT part FROM vehicle_components WHERE cars=%i OR cars=-1 ORDER BY CAST(part AS CHAR)", modelid);
             mysql_tquery(g_SQL, Query, "OnTuneLoad", "ii", playerid, 0);
         }
         default:
         {
-            static Query[315];
+            static Query[352];
 	        
             mysql_format(g_SQL, Query, sizeof Query,
             "SELECT " \
             "IF(parts & 1 <> 0,'Exhausts','')," \
             "IF(parts & 2 <> 0,'Hood','')," \
+            "IF(parts & 256 <> 0,'Hydraulics','')," \
             "IF(parts & 4 <> 0,'Lamps','')," \
             "IF(parts & 8 <> 0,'Roof','')," \
             "IF(parts & 16 <> 0,'Side Skirts','')," \
