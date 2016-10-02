@@ -21,6 +21,7 @@ How to install:
 
 Important notes:
 ----------------
+- It requires a vehicle spawner system at the very least.
 - Create a different database if you can. Using the same server and database will result in duplicate connections. You can allow them using:
 ```
 mysql_option(DUPLICATE_CONNECTIONS, true);
