@@ -190,15 +190,16 @@ public OnTuneLoad(playerid, idx)
         case 2:
         {
             static dialog_info[716];
-            new type[32];
+            new componentid, type[32];
 
             dialog_info = "{FF0000}Component ID\t{FF8000}Type\n";
 	        
             for (new i, j = cache_get_row_count(g_SQL); i != j; i++)
             {
+                componentid = cache_get_row_int(i, 0, g_SQL);
                 cache_get_row(i, 1, type, g_SQL);
 	            
-                format(dialog_info, sizeof dialog_info, "%s%i\t%s\n", dialog_info, cache_get_row_int(i, 0, g_SQL), type);
+                format(dialog_info, sizeof dialog_info, "%s%i\t%s\n", dialog_info, componentid, type);
             }
 	        
             if (componentid == 1087) strcat(dialog_info, " ----\tRemove Hydraulics");
