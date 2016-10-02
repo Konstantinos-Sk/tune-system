@@ -58,3 +58,4 @@ Credits
 - Y_Less, Emmet_ & maddinat0r (sscanf plugin)
 - Zeex (zcmd)
 - iJumbo (Color list idea - it was based on one of his [post](http://forum.sa-mp.com/showpost.php?p=2579670&postcount=1011) in __Useful Snippets__ thread)
+- oMa37 (testing)
