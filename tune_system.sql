@@ -9,7 +9,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `vehicle_components` (
   `componentid` smallint(4) UNSIGNED NOT NULL,
-  `part` enum('Exhausts','Front Bullbar','Front Bumper','Hood','Lamps','Misc','Rear Bullbar','Rear Bumper','Roof','Side Skirts','Spoilers','Vents','Wheels','Hydraulics') DEFAULT NULL,
+  `part` enum('Exhausts','Front Bullbar','Front Bumper','Hood','Hydraulics','Lamps','Misc','Rear Bullbar','Rear Bumper','Roof','Side Skirts','Spoilers','Vents','Wheels') DEFAULT NULL,
   `type` varchar(32) NOT NULL,
   `cars` smallint(3) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
