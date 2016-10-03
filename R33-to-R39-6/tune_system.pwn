@@ -244,8 +244,8 @@ CMD:tune(playerid, params[])
     {
         case 534 .. 536, 558 .. 562, 565, 567, 575, 576:
         {
-            new Query[99];
-            mysql_format(g_SQL, Query, sizeof Query, "SELECT DISTINCT part FROM vehicle_components WHERE cars=%i OR cars=-1 ORDER BY CAST(part AS CHAR)", modelid);
+            new Query[86];
+            mysql_format(g_SQL, Query, sizeof Query, "SELECT DISTINCT part FROM vehicle_components WHERE cars=%i OR cars=-1 ORDER BY part", modelid);
             mysql_tquery(g_SQL, Query, "OnTuneLoad", "ii", playerid, 0);
         }
         default:
@@ -256,13 +256,13 @@ CMD:tune(playerid, params[])
             "SELECT " \
             "IF(parts & 1 <> 0,'Exhausts','')," \
             "IF(parts & 2 <> 0,'Hood','')," \
-            "IF(parts & 256 <> 0,'Hydraulics','')," \
-            "IF(parts & 4 <> 0,'Lamps','')," \
-            "IF(parts & 8 <> 0,'Roof','')," \
-            "IF(parts & 16 <> 0,'Side Skirts','')," \
-            "IF(parts & 32 <> 0,'Spoilers','')," \
-            "IF(parts & 64 <> 0,'Vents','')," \
-            "IF(parts & 128 <> 0,'Wheels','') " \
+            "IF(parts & 4 <> 0,'Hydraulics','')," \
+            "IF(parts & 8 <> 0,'Lamps','')," \
+            "IF(parts & 16 <> 0,'Roof','')," \
+            "IF(parts & 32 <> 0,'Side Skirts','')," \
+            "IF(parts & 64 <> 0,'Spoilers','')," \
+            "IF(parts & 128 <> 0,'Vents','')," \
+            "IF(parts & 256 <> 0,'Wheels','') " \
             "FROM vehicle_model_parts WHERE modelid=%i", modelid);
             mysql_tquery(g_SQL, Query, "OnTuneLoad", "ii", playerid, 1);
         }
