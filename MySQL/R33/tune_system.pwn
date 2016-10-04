@@ -152,7 +152,7 @@ public OnTuneLoad(playerid, idx)
     {
         case 0:
         {
-            new dialog_info[79], part_name[14];
+            new dialog_info[83], part_name[15];
 
             for (new i, j = cache_get_row_count(g_SQL); i != j; i++)
             {
@@ -166,11 +166,9 @@ public OnTuneLoad(playerid, idx)
         }
         case 1:
         {
-            new rows = cache_get_row_count(g_SQL);
-			
-            if (rows)
+            if (cache_get_row_count(g_SQL))
             {
-                new dialog_info[80], part_name[13];
+                new dialog_info[83], part_name[14];
 
                 for (new i, j = cache_get_field_count(g_SQL); i != j; i++)
                 {
@@ -190,7 +188,7 @@ public OnTuneLoad(playerid, idx)
         case 2:
         {
             static dialog_info[716];
-            new componentid, type[32];
+            new componentid, type[22];
 
             dialog_info = "{FF0000}Component ID\t{FF8000}Type\n";
 	        
@@ -244,20 +242,20 @@ CMD:tune(playerid, params[])
     {
         case 534 .. 536, 558 .. 562, 565, 567, 575, 576:
         {
-            new Query[86];
-            mysql_format(g_SQL, Query, sizeof Query, "SELECT DISTINCT part FROM vehicle_components WHERE cars=%i OR cars=-1 ORDER BY part", modelid);
+            new Query[76];
+            mysql_format(g_SQL, Query, sizeof Query, "SELECT part FROM vehicle_components WHERE cars=%i OR cars=-1 GROUP BY part", modelid);
             mysql_tquery(g_SQL, Query, "OnTuneLoad", "ii", playerid, 0);
         }
         default:
         {
-            static Query[352];
+            static Query[354];
 	        
             mysql_format(g_SQL, Query, sizeof Query,
             "SELECT " \
             "IF(parts & 1 <> 0,'Exhausts','')," \
             "IF(parts & 2 <> 0,'Hood','')," \
             "IF(parts & 4 <> 0,'Hydraulics','')," \
-            "IF(parts & 8 <> 0,'Lamps','')," \
+            "IF(parts & 8 <> 0,'Lights','')," \
             "IF(parts & 16 <> 0,'Roof','')," \
             "IF(parts & 32 <> 0,'Side Skirts','')," \
             "IF(parts & 64 <> 0,'Spoilers','')," \
