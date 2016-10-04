@@ -14,15 +14,29 @@ There are only 4 commands available at the moment which are:
 
 How to install:
 ---------------
-1. Find the version (__R33 to R39-6__ or __R40+__) that matches the plugin version you've loaded into your server and save the filterscript as ___tune_system.pwn___
-2. Open _server.cfg_ and add _tune_system_ in the __filterscripts__ line.
+- MySQL:
+--------
+1. Import the .sql file to your database.
+2. Find the version (__R33 to R39-6__ or __R40+__) that matches the plugin version you've loaded into your server. Change the mysql configuration and save (compile) the filterscript as ___tune_system.pwn___
+3. Open _server.cfg_ and add _tune_system_ in the __filterscripts__ line.
+
+- SQLite:
+---------
+1. Import the .sql file to your database or paste tune_system.db into _scriptfiles_ folder.
+2. Change the configuration (database name) if you import the .sql file to a different database name.
+3. Save (compile) the filterscript as ___tune_system.pwn___
+4. Open _server.cfg_ and add _tune_system_ in the __filterscripts__ line.
 
 
 
 Important notes:
 ----------------
 - It requires a vehicle spawner system at the very least.
-- Create a different database if you can. Using the same server and database will result in duplicate connections. You can allow them using:
+- If the connection to the mysql server fails or the .db file (SQLite) couldn't be opened, it will try to unload the filterscript. Make sure the filterscript is named as _tune_system_.
+
+- MySQL:
+--------
+  - Create a different database if you can. Using the same server and database will result in duplicate connections. You can allow them using:
 ```
 mysql_option(DUPLICATE_CONNECTIONS, true);
 ```
@@ -48,7 +62,6 @@ MySQL said: Documentation
 #1115 - Unknown character set: 'utf8mb4'
 ```
 indicates that you use an older version of the mysql server. It is always recommended to update but if you cannot/don't want to, replace ___character set___ as __'utf8'__.
-- If the connection to the mysql server fails, it will try to unload the filterscript. Make sure the filterscript is named as _tune_system_.
 
 
 
