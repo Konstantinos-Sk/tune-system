@@ -204,20 +204,20 @@ CMD:tune(playerid, params[])
         }
         default:
         {
-            static Query[534];
+            static Query[462];
 
             Query = "SELECT " \
-            "CASE WHEN parts & 1 <> 0 THEN 'Exhausts' ELSE '' END," \
-            "CASE WHEN parts & 2 <> 0 THEN 'Hood' ELSE '' END," \
-            "CASE WHEN parts & 4 <> 0 THEN 'Hydraulics' ELSE '' END," \
-            "CASE WHEN parts & 8 <> 0 THEN 'Lights' ELSE '' END," \
-            "CASE WHEN parts & 16 <> 0 THEN 'Roof' ELSE '' END,";
+            "CASE WHEN parts & 1 <> 0 THEN 'Exhausts' END," \
+            "CASE WHEN parts & 2 <> 0 THEN 'Hood' END," \
+            "CASE WHEN parts & 4 <> 0 THEN 'Hydraulics' END," \
+            "CASE WHEN parts & 8 <> 0 THEN 'Lights' END," \
+            "CASE WHEN parts & 16 <> 0 THEN 'Roof' END,";
 
             strcat(Query,
-            "CASE WHEN parts & 32 <> 0 THEN 'Side Skirts' ELSE '' END," \
-            "CASE WHEN parts & 64 <> 0 THEN 'Spoilers' ELSE '' END," \
-            "CASE WHEN parts & 128 <> 0 THEN 'Vents' ELSE '' END," \
-            "CASE WHEN parts & 256 <> 0 THEN 'Wheels' ELSE '' END " \
+            "CASE WHEN parts & 32 <> 0 THEN 'Side Skirts' END," \
+            "CASE WHEN parts & 64 <> 0 THEN 'Spoilers' END," \
+            "CASE WHEN parts & 128 <> 0 THEN 'Vents' END," \
+            "CASE WHEN parts & 256 <> 0 THEN 'Wheels' END " \
             "FROM vehicle_model_parts WHERE modelid=%i");
 
             format(Query, sizeof Query, Query, modelid);
