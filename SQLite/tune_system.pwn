@@ -94,15 +94,14 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 
                 Query = "{FF0000}Component ID\t{FF8000}Type\n";
 
-                for (new i, j = db_num_rows(result); i != j; i++)
+                do
                 {
                     componentid = db_get_field_int(result);
                     db_get_field(result, 1, type, sizeof type);
 
                     format(Query, sizeof Query, "%s%i\t%s\n", Query, componentid, type);
-
-                    db_next_row(result);
                 }
+                while (db_next_row(result));
 
                 if (componentid == 1087) strcat(Query, " ----\tRemove Hydraulics");
 
@@ -188,15 +187,14 @@ CMD:tune(playerid, params[])
 
             Query[0] = EOS;
 
-            for (new i, j = db_num_rows(result); i != j; i++)
+            do
             {
                 db_get_field(result, 0, part_name, sizeof part_name);
 
                 strcat(Query, part_name);
                 strcat(Query, "\n");
-
-                db_next_row(result);
             }
+            while (db_next_row(result));
 
             db_free_result(result);
 
